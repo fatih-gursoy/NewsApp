@@ -7,33 +7,58 @@
 
 import Foundation
 
+protocol EndPoint {
+    var baseURL: String { get }
+    var headers: [String:String] { get }
+    var path: String { get }
+    var queryItems: [URLQueryItem]? { get }
+    var url: URL? { get }
+}
 
-enum EndPoint {
+enum API: EndPoint {
     
-    var baseUrl: String {
-      return "https://newsapi.org/v2/"
+    case everything
+    case topHeadlines(country: String?, category: String?)
+    
+    var url : URL? {
+        var components = URLComponents(string: baseURL)!
+        components.path = path
+        components.queryItems = queryItems
+        guard let url = components.url else { fatalError() }
+        return url
+    }
+    
+    var baseURL: String {
+      return "https://newsapi.org"
     }
 
     var headers: [String:String] {
         return ["X-API-Key": "9fd690aefd6f4cc389f4307bd4070151"]
     }
     
-    case everything
-    case topHeadlines(country: Country)
-    
-}
-
-extension EndPoint {
-    
     var path: String {
         switch self {
         
         case .everything:
-            return "everything?"
+            return "/v2/everything"
             
-        case .topHeadlines(let country):
-            return "top-headlines?country=\(country)"
+        case .topHeadlines:
+            return "/v2/top-headlines"
         }
+    }
+    
+    var queryItems: [URLQueryItem]? {
+        
+        switch self {
+        
+        case .topHeadlines(let country, let category):
+            return [URLQueryItem(name: "country", value: country),
+                    URLQueryItem(name: "category", value: category)]
+            
+        case .everything:
+            break
+        }
+        return nil
     }
 }
 

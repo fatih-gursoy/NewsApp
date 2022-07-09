@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct NewsFeedView: View {
-    
+struct HomeView: View {
     
     var body: some View {
         
@@ -19,11 +18,7 @@ struct NewsFeedView: View {
                 Text("Discover")
             }
             
-            NavigationView {
-                
-            }
-            
-            .tabItem {
+            CategoryView().tabItem {
                 Image(systemName: "star.fill")
                 Text("Categories")
             }
@@ -47,9 +42,9 @@ struct NewsFeedView: View {
     }
 }
 
-struct NewsFeedView_Previews: PreviewProvider {
+struct HomeViewView_Previews: PreviewProvider {
     static var previews: some View {
-        NewsFeedView()
+        HomeView()
             .previewInterfaceOrientation(.portrait)
     }
 }

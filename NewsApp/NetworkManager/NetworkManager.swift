@@ -12,18 +12,15 @@ protocol NetworkProtocol: AnyObject {
 }
 
 class NetworkManager {
-    
     static let shared = NetworkManager()
     private init() {}
-    
 }
 
 extension NetworkManager: NetworkProtocol {
     
     func fetchData<T:Decodable>(endPoint: EndPoint, completion: @escaping (T) -> Void) {
 
-        guard let url = URL(string: endPoint.baseUrl + endPoint.path) else { return }
-                
+        guard let url = endPoint.url else { return }
         let request = NSMutableURLRequest(url: url)
         request.allHTTPHeaderFields = endPoint.headers
         request.httpMethod = "GET"

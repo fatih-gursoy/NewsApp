@@ -20,7 +20,7 @@ struct DiscoverView: View {
             VStack {
                 SegmentedPickerView(selected: $selected)
                     .onChange(of: selected) { newValue in
-                        viewModel.fetchNews(selected)
+                        viewModel.fetchNews(byCountry: selected)
                     }
                 
                 List {
@@ -32,7 +32,7 @@ struct DiscoverView: View {
                 .navigationTitle("Top News")
             }
             .onAppear {
-                viewModel.fetchNews(selected)
+                viewModel.fetchNews(byCountry: selected)
             }
         }
         

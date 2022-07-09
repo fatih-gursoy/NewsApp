@@ -12,15 +12,16 @@ class NewsViewModel: ObservableObject {
     
     private let service: NetworkProtocol
     
-    init(service: NetworkManager = NetworkManager.shared) {
+    init(service: NetworkProtocol = NetworkManager.shared) {
         self.service = service
     }
     
     @Published var articles: [Article] = []
     
-    func fetchNews(_ byCountry: Country) {
+    func fetchNews(byCountry: Country?, byCategory: Category? = nil) {
         
-        service.fetchData(endPoint: EndPoint.topHeadlines(country: byCountry)) { (result: Response) in
+        service.fetchData(endPoint: API.topHeadlines(country: byCountry?.rawValue,
+                                                     category: byCategory?.rawValue)) { (result: Response) in
             
             self.articles = result.articles
             

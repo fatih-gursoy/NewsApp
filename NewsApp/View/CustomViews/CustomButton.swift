@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomButton: View {
     
-    @Binding  var imageTapped: Bool
+    @Binding var imageTapped: Bool
     
     var firstImage: String?
     var secondImage: String?
